@@ -36,4 +36,4 @@ vite build
 <hr>
 
 ## 🏦License
-[MIT © Vben-2020](https://github.com/Zssaer/admin-manage/LICENSE)
+[MIT © Vben-2020](https://github.com/Zssaer/admin-manage/blob/main/LICENSE)
