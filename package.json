@@ -1,0 +1,40 @@
+{
+  "name": "admin-manage",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.2.6",
+    "vuex": "^4.0.2",
+    "vue-router": "^4.0.0-0",
+    "nprogress": "^0.2.0",
+    "screenfull": "^5.1.0",
+    "sortablejs": "^1.13.0",
+    "element-plus": "^1.0.2-beta.28",
+    "mitt": "^2.1.0",
+    "axios": "^0.21.1",
+    "core-js": "^3.6.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.6.0",
+    "@vue/compiler-sfc": "^3.2.6",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^7.0.0",
+    "mockjs": "^1.1.0",
+    "prettier": "^2.2.1",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "vue-cli-plugin-element-plus": "^0.0.13",
+    "vite": "^2.5.2"
+  }
+}
