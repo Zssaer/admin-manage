@@ -45,7 +45,7 @@ export default defineComponent({
           id: 4,
           txt: "当前页全屏",
           affix: false,
-          icon: "iconfont icon-fullscreen",
+          icon: "iconfont el-icon-view",
         },
       ],
       path: {},

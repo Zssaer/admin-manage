@@ -1,11 +1,12 @@
 <template>
   <el-aside
     class="layout-aside"
+    :style="{background:menuColor}"
     :class="setCollapseWidth"
     v-if="clientWidth > 1000"
   >
     <el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
-      <Vertical :menuList="menuList" :class="setCollapseWidth" />
+      <Vertical :menuList="menuList" :class="setCollapseWidth"/>
     </el-scrollbar>
   </el-aside>
   <el-drawer
@@ -44,6 +45,7 @@ export default {
     const store = useStore();
     const { proxy } = getCurrentInstance();
     const state = reactive({
+      menuColor: computed(() => store.state.themeConfig.themeConfig.menuBar),
       isCollapse: false,
       menuList: [],
       clientWidth: "",

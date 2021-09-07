@@ -20,7 +20,7 @@ const themeConfigModule = {
 			// 默认顶栏导航背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
 			topBar: '#ffffff',
 			// 默认菜单导航背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
-			menuBar: '#545c64',
+			menuBar: '#6A8372',
 			// 默认分栏菜单背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
 			columnsMenuBar: '#545c64',
 			// 默认顶栏导航字体颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
@@ -80,6 +80,12 @@ const themeConfigModule = {
 		// 设置布局配置
 		getThemeConfig(state, data) {
 			state.themeConfig = data;
+		},
+		setMenuColor(state, color) {
+			state.themeConfig.menuBar = color;
+		},
+		setMenuBarColor(state, color) {
+			state.themeConfig.menuBarColor = color;
 		},
 	},
 	actions: {

@@ -3,6 +3,9 @@
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
 			<i class="el-icon-search" title="菜单搜索"></i>
 		</div>
+		<div class="layout-navbars-breadcrumb-user-icon" @click="onSettingClick">
+			<i class="el-icon-s-open" title="主题设置"></i>
+		</div>
 		<div class="layout-navbars-breadcrumb-user-icon">
 			<el-popover placement="bottom" trigger="click" v-model:visible="isShowUserNewsPopover" :width="300" popper-class="el-popover-pupop-user-news">
 				<template #reference>
@@ -15,6 +18,7 @@
 				</transition>
 			</el-popover>
 		</div>
+		
 		<div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick">
 			<i
 				class="el-icon-full-screen"
@@ -37,6 +41,7 @@
 			</template>
 		</el-dropdown>
 		<Search ref="searchRef" />
+		<Setting ref="settingRef"/>
 	</div>
 </template>
 
@@ -49,12 +54,14 @@ import screenfull from 'screenfull';
 import { clearSession, getSession} from '@/utils/storage.js';
 import UserNews from '@/views/layout/navBars/breadcrumb/userNews.vue';
 import Search from '@/views/layout/navBars/breadcrumb/search.vue';
+import Setting from '@/views/layout/navBars/breadcrumb/setting.vue';
 export default {
 	name: 'layoutBreadcrumbUser',
-	components: { UserNews, Search },
+	components: { UserNews, Search,Setting },
 	setup() {
 		const router = useRouter();
-		const searchRef = ref();
+		const settingRef = ref(null);
+		const searchRef = ref(null);
 		const state = reactive({
 			isScreenfull: false,
 			isShowUserNewsPopover: false,
@@ -120,6 +127,9 @@ export default {
 			}
 		};
 		// 菜单搜索点击
+		const onSettingClick = () => {
+			settingRef.value.openSetting();
+		};
 		const onSearchClick = () => {
 			searchRef.value.openSearch();
 		};
@@ -128,6 +138,8 @@ export default {
 			onHandleCommandClick,
 			onScreenfullClick,
 			onSearchClick,
+			onSettingClick,
+			settingRef,
 			searchRef,
 			layoutUserFlexNum,
 			...toRefs(state),

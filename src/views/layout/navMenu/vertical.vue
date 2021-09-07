@@ -7,14 +7,14 @@
 		:collapse-transition="false"
 	>
 		<template v-for="val in menuLists">
-			<el-submenu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
+			<el-submenu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path" >
 				<template #title>
-					<i :class="val.meta.icon ? val.meta.icon : ''"></i>
-					<span>{{val.meta.title}}</span>
+					<i :class="val.meta.icon ? val.meta.icon : ''" :style="{color:menuColor}"></i>
+					<span :style="{color:menuColor}">{{val.meta.title}}</span>
 				</template>
-				<SubItem :chil="val.children" />
+				<SubItem :chil="val.children" :menuColor="menuColor" />
 			</el-submenu>
-			<el-menu-item :index="val.path" :key="val.path" v-else>
+			<el-menu-item :index="val.path" :key="val.path" v-else :style="{color:menuColor}">
 				<i :class="val.meta.icon ? val.meta.icon : ''"></i>
 				<template #title v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
 					<span>{{val.meta.title}}</span>
@@ -44,10 +44,12 @@ export default defineComponent({
 	setup(props) {
 		const { proxy } = getCurrentInstance();
 		const route = useRoute();
+		const store = useStore()
 		const state = reactive({
+			menuColor: computed(() => store.state.themeConfig.themeConfig.menuBarColor),
 			defaultActive: route.path
 		});
-		const store = useStore()
+		
 
 		// 获取父级菜单数据
 		const menuLists = computed(() => {

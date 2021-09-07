@@ -9,8 +9,8 @@
 		</el-submenu>
 		<el-menu-item :index="val.path" :key="val.path" v-else>
 			<template v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
-				<i :class="val.meta.icon ? val.meta.icon : ''"></i>
-				<span>{{val.meta.title}}</span>
+				<i :class="val.meta.icon ? val.meta.icon : ''" :style="{color:menuColor}"></i>
+				<span :style="{color:menuColor}">{{val.meta.title}}</span>
 			</template>
 			<template v-else>
 				<a :href="val.meta.isLink" target="_blank">
@@ -31,6 +31,7 @@ export default defineComponent({
 			type: Array,
 			default: () => [],
 		},
+		menuColor:String
 	},
 	setup(props) {
 		// 获取父级菜单数据

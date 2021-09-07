@@ -1,74 +1,8 @@
 <template>
     <div>
-        <el-tabs type="border-card" v-model='type'>
-        <el-tab-pane label="后台操作说明" name='1'></el-tab-pane>
-        <el-tab-pane label="后台信息" name='2'></el-tab-pane>     
-            <div class="ms-doc" v-if="type==2">
-                <article>
-                    <h1>Admin-Manage后台</h1>
-                    <el-row>
-                        <el-col :span="8" >
-                            <el-card class="box-card" shadow="hover" >
-                                <template #header>
-                                    <div class="card-header">
-                                    <h2>个人信息</h2>
-                                    </div>
-                                </template>
-                                <div class="text item">
-                                    <p>{{'当前账户ID :' + personalInfo.id }}</p>
-                                    <p>{{'当前账户名称 :' + personalInfo.name }}</p>
-                                    <p>{{'当前账户角色ID :' + personalInfo.roleId }}</p>
-                                    <p>{{'当前账户角色类型 :' + personalInfo.roleName }}</p>
-                                </div>
-                            </el-card>
-                        </el-col>
-                        <el-col :span="8" v-if="pageConfig!=''">
-                            <el-card class="box-card" shadow="hover">
-                                <template #header>
-                                    <div class="card-header">
-                                    <h2>网站配置信息</h2>
-                                    </div>
-                                </template>
-                                <el-skeleton :rows="5" :loading="pageConfigLoading" animated>
-                                    <div class="text item">
-                                        <p v-for="(val, key, i) in pageConfig" :key="i">{{key}}:{{val}}</p>
-                                    </div>
-                                </el-skeleton>
-                            </el-card>
-                        </el-col>
-                        <el-col :span="8" v-if="sysConfig!=''">
-                            <el-card class="box-card" shadow="hover">
-                                <template #header>
-                                    <div class="card-header">
-                                    <h2>系统参数</h2>
-                                    </div>
-                                </template>
-                                <el-skeleton :rows="3" :loading="sysConfigLoading" animated>
-                                    <div class="text item">
-                                        <p v-for="(val, key, i) in sysConfig" :key="i">{{key}}:{{filter(val)}}</p>
-                                    </div>
-                                </el-skeleton>    
-                            </el-card>
-                        </el-col>
-                        <el-col :span="8" v-if="Explore!=''">
-                            <el-card class="box-card" shadow="hover">
-                                <template #header>
-                                    <div class="card-header">
-                                    <h2>浏览器参数</h2>
-                                    </div>
-                                </template>
-                                <el-skeleton :rows="3" :loading="ExploreLoading" animated>
-                                    <div class="text item">
-                                        <p>浏览器类型-{{Explore}}</p>
-                                        <p>UserAgent:{{UserAgent}}</p>
-                                    </div>
-                                </el-skeleton>    
-                            </el-card>
-                        </el-col>
-                    </el-row>    
-                </article>
-            </div> 
-            <div class="ms-doc" v-if="type==1">
+        <el-tabs type="border-card" >
+        <el-tab-pane label="后台操作说明" name='1'></el-tab-pane> 
+            <div class="ms-doc" >
                     <article>
                         <h1>Admin-Manage后台操作说明</h1>
                         <h2>基本内容说明</h2><h3>个人管理</h3><p>修改密码：修改当前后台用户的登录密码。</p>
@@ -113,94 +47,11 @@
     
 </template>
 <script>
-import { getSession } from '@/utils/storage.js'
-import { getPageConfigList,getSysConfigList} from '@/api/sysmag/pageCofig.js';
 
 
 export default {
     setup() {
-    },
-    data() {
-        return{
-            type:'1',
-            pageConfigLoading: true,
-            sysConfigLoading:true,
-            ExploreLoading:true,
-            personalInfo:getSession('userInfo'),
-            pageConfig:[],
-            sysConfig:[],
-            Explore:'',
-            UserAgent:'',
-        }
-    },
-    methods: {
-        getPageConfigList() {
-            getPageConfigList().then((res) => {
-                        if(res.code == 200){
-                            this.pageConfig = res.data;
-                            this.pageConfigLoading = false;
-                        }
-            }).catch(() =>{
-                        this.$message({
-                            type: 'error',
-                            message:"网络,请重试或者联系管理员！！"
-                        });
-            })
-        },
-        getSysConfigList(){
-            getSysConfigList().then((res) => {
-                        if(res.code == 200){
-                            this.sysConfig = res.data;
-                            this.sysConfigLoading=false;
-                        }
-            }).catch(() =>{
-                        this.$message({
-                            type: 'error',
-                            message:"网络,请重试或者联系管理员！！"
-                        });
-            })
-        },
-        filter(val){
-            switch (val){
-                case '0':
-                    return '关闭'; 
-                case '1':
-                    return '开启';
-                default:
-                    return val;  
-            }
-        },
-        getExplore(){
-            var Sys = {};  
-            var ua = navigator.userAgent.toLowerCase();  
-            var s;  
-            (s = ua.match(/rv:([\d.]+)\) like gecko/)) ? Sys.ie = s[1] :
-            (s = ua.match(/msie ([\d\.]+)/)) ? Sys.ie = s[1] :  
-            (s = ua.match(/edge\/([\d\.]+)/)) ? Sys.edge = s[1] :
-            (s = ua.match(/firefox\/([\d\.]+)/)) ? Sys.firefox = s[1] :  
-            (s = ua.match(/(?:opera|opr).([\d\.]+)/)) ? Sys.opera = s[1] :  
-            (s = ua.match(/chrome\/([\d\.]+)/)) ? Sys.chrome = s[1] :  
-            (s = ua.match(/version\/([\d\.]+).*safari/)) ? Sys.safari = s[1] : 0;  
-            this.ExploreLoading=false;
-            // 根据关系进行判断
-            if (Sys.ie) return ('IE: ' + Sys.ie);  
-            if (Sys.edge) return ('EDGE: ' + Sys.edge);
-            if (Sys.firefox) return ('Firefox: ' + Sys.firefox);  
-            if (Sys.chrome) return ('Chrome: ' + Sys.chrome);  
-            if (Sys.opera) return ('Opera: ' + Sys.opera);  
-            if (Sys.safari) return ('Safari: ' + Sys.safari);
-            return 'Unkonwn';
-        },
-        showUserAgent() {
-            return navigator.userAgent;
-        }
-    },
-    created() {
-        this.getPageConfigList();
-        this.getSysConfigList();
-        this.Explore=this.getExplore();
-        this.UserAgent=this.showUserAgent();
-    },
+    },     
 }
 </script>
 <style scoped lang="scss">
