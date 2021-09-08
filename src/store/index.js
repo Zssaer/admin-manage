@@ -1,6 +1,11 @@
 import { createStore, useStore as baseUseStore } from 'vuex';
 import themeConfig from '@/store/modules/themeConfig.js';
+import VuexPersist from 'vuex-persist';
 
+// 创建对象，借助浏览器缓存，存入localStorage
+const vuexLocal = new VuexPersist({
+	storage: window.localStorage  // 可选，sessionStorage/indexDB
+})
 export const store = createStore({
 	modules: {
 		themeConfig
@@ -26,7 +31,8 @@ export const store = createStore({
 		async setTagsViewRoutes({ commit }, data) {
 			commit('getTagsViewRoutes', data)
 	},
-	}
+	},
+	plugins: [vuexLocal.plugin]
 });
 
 export function useStore() {

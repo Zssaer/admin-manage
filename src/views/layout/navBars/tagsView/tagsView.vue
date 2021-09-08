@@ -111,6 +111,7 @@ export default {
     // 2、刷新当前 tagsView：
     const refreshCurrentTagsView = (path) => {
       proxy.mittBus.emit("onTagsViewRefreshRouterView", path);
+      router.push(path);
     };
     // 3、关闭当前 tagsView：如果是设置了固定的（isAffix），不可以关闭
     const closeCurrentTagsView = (path) => {
@@ -161,7 +162,6 @@ export default {
       switch (id) {
         case 0:
           refreshCurrentTagsView(path);
-          router.push(path);
           break;
         case 1:
           closeCurrentTagsView(path);
@@ -321,7 +321,7 @@ export default {
       border: 1px solid #e6e6e6;
       padding: 0 15px;
       margin-right: 5px;
-      border-radius: 2px;
+      border-radius: 7px;
       position: relative;
       z-index: 0;
       cursor: pointer;
@@ -439,5 +439,8 @@ export default {
 }
 .layout-navbars-tagsview-shadow {
   box-shadow: rgb(0 21 41 / 4%) 0px 1px 4px;
+}
+.el-scrollbar__view{
+  
 }
 </style>

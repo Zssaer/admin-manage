@@ -18,17 +18,19 @@ const themeConfigModule = {
 			/* 菜单 / 顶栏
             ------------------------------- */
 			// 默认顶栏导航背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
-			topBar: '#ffffff',
+			topBar: '#2196F3',
 			// 默认菜单导航背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
-			menuBar: '#6A8372',
+			menuBar: '#1976D2',
 			// 默认分栏菜单背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
 			columnsMenuBar: '#545c64',
 			// 默认顶栏导航字体颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
-			topBarColor: '#606266',
+			topBarColor: '#FFFFFF',
 			// 默认菜单导航字体颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
-			menuBarColor: '#eaeaea',
+			menuBarColor: '#FFFFFF',
 			// 默认分栏菜单字体颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
 			columnsMenuBarColor: '#e6e6e6',
+
+			tagsStyle: 'tagsStyleOne',
 
 
 			/* 界面设置
@@ -52,9 +54,9 @@ const themeConfigModule = {
 			// 是否开启 Tagsview 图标
 			isTagsviewIcon: false,
 			// 是否开启 TagsView 缓存
-			isCacheTagsView: false,
+			isCacheTagsView: true,
 			// 是否开启 TagsView 拖拽
-			isSortableTagsView: false,
+			isSortableTagsView: true,
 			// 是否开启 Footer 底部版权信息
 			isFooter: false,
 
@@ -86,6 +88,21 @@ const themeConfigModule = {
 		},
 		setMenuBarColor(state, color) {
 			state.themeConfig.menuBarColor = color;
+		},
+		setTopBarColor(state, color) {
+			state.themeConfig.topBar = color;
+		},
+		setTopBarTextColor(state, color) {
+			state.themeConfig.topBarColor = color;
+		},
+		setTagsStyle(state, style) {
+			state.themeConfig.tagsStyle = style;
+		},
+		openTagsview(state, data) {
+			state.themeConfig.isTagsview = data;
+		},
+		openBreadcrumb(state, data) {
+			state.themeConfig.isBreadcrumb = data;
 		},
 	},
 	actions: {

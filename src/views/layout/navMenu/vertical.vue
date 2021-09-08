@@ -1,76 +1,149 @@
 <template>
-	<el-menu
-		router
-		:default-active="defaultActive"
-		background-color="transparent"
-		:collapse="setIsCollapse"
-		:collapse-transition="false"
-	>
-		<template v-for="val in menuLists">
-			<el-submenu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path" >
-				<template #title>
-					<i :class="val.meta.icon ? val.meta.icon : ''" :style="{color:menuColor}"></i>
-					<span :style="{color:menuColor}">{{val.meta.title}}</span>
-				</template>
-				<SubItem :chil="val.children" :menuColor="menuColor" />
-			</el-submenu>
-			<el-menu-item :index="val.path" :key="val.path" v-else :style="{color:menuColor}">
-				<i :class="val.meta.icon ? val.meta.icon : ''"></i>
-				<template #title v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
-					<span>{{val.meta.title}}</span>
-				</template>
-				<template #title v-else>
-					<a :href="val.meta.isLink" target="_blank">{{val.meta.title}}</a></template>
-			</el-menu-item>
-		</template>
-	</el-menu>
+  <el-menu
+    router
+    :default-active="defaultActive"
+    background-color="transparent"
+    :collapse="setIsCollapse"
+    :collapse-transition="true"
+  > 
+    <div class="logo">
+    <img class="logoImg" loading="lazy" src="@/assets/logo.png">
+    </div>
+    <template v-for="val in menuLists">
+      <el-submenu
+        :index="val.path"
+        v-if="val.children && val.children.length > 0"
+        :key="val.path"
+      >
+        <template #title>
+          <i
+            :class="val.meta.icon ? val.meta.icon : ''"
+            :style="{ color: menuColor }"
+          ></i>
+          <span :style="{ color: menuColor }">{{ val.meta.title }}</span>
+        </template>
+        <SubItem :chil="val.children" :menuColor="menuColor" />
+      </el-submenu>
+      <el-menu-item
+        :index="val.path"
+        :key="val.path"
+        v-else
+        :style="{ color: menuColor }"
+      >
+        <i :class="val.meta.icon ? val.meta.icon : ''"></i>
+        <template
+          #title
+          v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)"
+        >
+          <span>{{ val.meta.title }}</span>
+        </template>
+        <template #title v-else>
+          <a :href="val.meta.isLink" target="_blank">{{
+            val.meta.title
+          }}</a></template
+        >
+      </el-menu-item>
+    </template>
+  </el-menu>
 </template>
 
 <script>
-import { toRefs, reactive, computed, defineComponent, getCurrentInstance } from 'vue';
-import { useRoute, onBeforeRouteUpdate } from 'vue-router';
-import { useStore } from '@/store'
+import {
+  toRefs,
+  reactive,
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  watch,
+} from "vue";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { useStore } from "@/store";
 
-import SubItem from '@/views/layout/navMenu/subItem.vue';
+import SubItem from "@/views/layout/navMenu/subItem.vue";
 export default defineComponent({
-	name: 'navMenuVertical',
-	components: { SubItem },
-	props: {
-		menuList: {
-			type: Array,
-			default: () => [],
-		},
-	},
-	setup(props) {
-		const { proxy } = getCurrentInstance();
-		const route = useRoute();
-		const store = useStore()
-		const state = reactive({
-			menuColor: computed(() => store.state.themeConfig.themeConfig.menuBarColor),
-			defaultActive: route.path
-		});
-		
+  name: "navMenuVertical",
+  components: { SubItem },
+  props: {
+    menuList: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  setup(props) {
+    const { proxy } = getCurrentInstance();
+    const route = useRoute();
+    const store = useStore();
+    const state = reactive({
+      menuColor: computed(
+        () => store.state.themeConfig.themeConfig.menuBarColor
+      ),
+      defaultActive: route.path,
+    });
 
-		// 获取父级菜单数据
-		const menuLists = computed(() => {
-			return props.menuList;
-		});
-		// 设置菜单的收起/展开
-		const setIsCollapse = computed(() => {
-			return store.state.themeConfig.themeConfig.isCollapse;
-			// return document.body.clientWidth < 1000 ? false : false;
-		});
-		// 路由更新时
-		onBeforeRouteUpdate((to) => {
-			state.defaultActive = to.path;
-			proxy.mittBus.emit('onMenuClick');
-		});
+    // 获取父级菜单数据
+    const menuLists = computed(() => {
+      return props.menuList;
+    });
+    // 设置菜单的收起/展开
+    const setIsCollapse = computed(() => {
+      return store.state.themeConfig.themeConfig.isCollapse;
+      // return document.body.clientWidth < 1000 ? false : false;
+    });
+    // 路由更新时
+    onBeforeRouteUpdate((to) => {
+      state.defaultActive = to.path;
+      proxy.mittBus.emit("onMenuClick");
+    });
 
-		return {
-			menuLists,
-			setIsCollapse,
-			...toRefs(state)
-		};
-	},
+    return {
+      menuLists,
+      setIsCollapse,
+      ...toRefs(state),
+    };
+  },
 });
 </script>
+<style lang="scss">
+.el-menu.el-menu--collapse.layout-aside-width64.v-enter-to{
+  .logoImg{
+    height: 20px;
+    width: 65px;
+    position: absolute;
+    top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+  }
+}
+.logo{
+  position: relative;
+  text-align:center;
+  height: 59px;
+}
+.logoImg{
+  width: 80%; 
+}
+
+.el-submenu__title {
+  .el-icon-arrow-down:before {
+    content: '\e790';
+    color: white;
+  }
+}
+/*菜单下拉框样式开始*/
+>>> .el-menu--horizontal > .el-submenu:focus .el-submenu__title {
+  color: white;
+}
+.el-menu--popup-bottom-start .el-submenu >>> .el-submenu__title {
+  color: #333333 !important;
+  font-size: 12px !important;
+}
+.el-menu--popup-bottom-start .el-submenu >>> .el-submenu__title:hover {
+  background-color: #eaf5ff !important;
+  color: #53b1fd !important;
+}
+.el-menu-item:hover {
+  background-color: #333333 !important;
+  color: #53b1fd !important;
+}
+/*菜单下拉框样式结束*/
+</style>

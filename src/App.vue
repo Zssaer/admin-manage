@@ -16,8 +16,11 @@ export default({
 			() => route.path,
 			() => {
 				nextTick(() => {
-					// document.title = `${route.meta.title} - 智慧医疗实验室` || '智慧医疗实验室';
-					document.title = 'Admin-Manage';
+					if(route.meta.title){
+						document.title = `${route.meta.title} - TinyAdmin-Manage` || 'TinyAdmin-Manage';
+					}else{
+						document.title = 'TinyAdmin-Manage';
+					}	
 				});
 			}
 		);

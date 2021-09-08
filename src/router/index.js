@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { getSession } from "@/utils/storage.js";
+import { getSession,setSession } from "@/utils/storage.js";
 import { NextLoading } from "@/utils/loading.js";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
@@ -126,6 +126,7 @@ export function initRoutes(routes) {
   setTagsViewFun(mainRoutes.children);
   router.addRoute(mainRoutes);
   router.addRoute(pathMatch);
+  
   console.log("router.getRoutes() :>> ", router.getRoutes());
 }
 
@@ -140,8 +141,9 @@ export function getBackEndControlRoutes(callback) {
   });
 }
 
-const modules = import.meta.glob("../views/*/**");
+
 export function formatBackEndRoutes(list) {
+  const modules = import.meta.glob("../views/*/**");
   const newList = [];
   list.map((o) => {
     if (o.children && o.children.length > 0) {
@@ -167,24 +169,23 @@ let hasBackEndRoutes = false;
 router.beforeEach((to, from, next) => {
   NProgress.start();
   const token = getSession("voucher");
+
   if (token) {
     if (!hasBackEndRoutes) {
       // 获取主题配置，是否为后端获取路由
       const requestRoutes = store.state.themeConfig.themeConfig.isRequestRoutes;
-
-      if (requestRoutes) {
-        getBackEndControlRoutes((res) => {
-          console.log("后端菜单", res);
-          const routes = res.data;
-          const list = formatBackEndRoutes(routes);
-          initRoutes(list);
-          hasBackEndRoutes = true;
-          const path = router.currentRoute.value.fullPath;
-          router.push(path);
-        });
-      } else {
-        initRoutes(staticRoutesConfig);
-      }
+        if (requestRoutes) {
+          getBackEndControlRoutes((res) => {
+            const routes = res.data;
+            const list = formatBackEndRoutes(routes);
+            initRoutes(list);
+            hasBackEndRoutes = true;
+            const path = router.currentRoute.value.fullPath;
+            router.push(path);
+          });
+        } else {
+          initRoutes(staticRoutesConfig);
+        }
     }
 
     if (to.path == "/login") {

@@ -106,3 +106,10 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.layout-container{
+  .layout-aside{
+    box-shadow: 1px 2px 3px #757575;
+  }
+}
+</style>

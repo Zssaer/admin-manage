@@ -1,5 +1,5 @@
 <template>
-	<div class="layout-navbars-breadcrumb-index">
+	<div class="layout-navbars-breadcrumb-index" :style="{background:topBarColor}">
 		<Breadcrumb />
 		<User />
 	</div>
@@ -8,22 +8,32 @@
 <script >
 import Breadcrumb from '@/views/layout/navBars/breadcrumb/breadcrumb.vue';
 import User from '@/views/layout/navBars/breadcrumb/user.vue';
+import { useStore } from '@/store'
+import { computed, reactive, toRefs } from 'vue';
+
 export default {
 	name: 'layoutBreadcrumbIndex',
 	components: {User,Breadcrumb},
 	setup() {
+		const store = useStore();
+		const state = reactive({
+			topBarColor: computed(() => store.state.themeConfig.themeConfig.topBar),
+		});
+		return{
+			...toRefs(state)
+		}
 	},
 };
 </script>
 
 <style scoped lang="scss">
 .layout-navbars-breadcrumb-index {
-	height: 50px;
+	height: 80px;
 	display: flex;
 	align-items: center;
 	padding-right: 15px;
-	background: var(--bg-topBar);
 	overflow: hidden;
-	border-bottom: 1px solid #f1f2f3;
+	border-bottom: 1px solid #BDBDBD;
+
 }
 </style>

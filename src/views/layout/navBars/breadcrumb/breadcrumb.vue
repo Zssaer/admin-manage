@@ -4,6 +4,7 @@
       class="layout-navbars-breadcrumb-icon"
       :class="getThemeConfig.isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
       @click="onThemeConfigChange"
+      :style="{ color: topBarTextColor }"
     ></i>
     <el-breadcrumb class="layout-navbars-breadcrumb-hide">
       <transition-group name="breadcrumb" mode="out-in">
@@ -14,6 +15,7 @@
           <span
             v-if="k === breadcrumbList.length - 1"
             class="layout-navbars-breadcrumb-span"
+            :style="{ color: topBarTextColor }"
           >
             <i
               :class="v.meta.icon"
@@ -22,7 +24,7 @@
             ></i
             >{{ v.meta.title }}
           </span>
-          <a v-else @click.prevent="onBreadcrumbClick(v)">
+          <a v-else @click.prevent="onBreadcrumbClick(v)" :style="{ color: topBarTextColor }">
             <i
               :class="v.meta.icon"
               class="layout-navbars-breadcrumb-iconfont"
@@ -52,6 +54,9 @@ export default {
       routeSplit: [],
       routeSplitFirst: "",
       routeSplitIndex: 1,
+      topBarTextColor: computed(
+        () => store.state.themeConfig.themeConfig.topBarColor
+      ),
     });
 
     // 获取布局配置信息

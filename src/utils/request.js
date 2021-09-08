@@ -26,10 +26,15 @@ request.interceptors.request.use(config => {
 request.interceptors.response.use(response => {
   const res = response.data
   if (res.code && res.code !== 0) {
-    if (res.message=="未登录,没有权限访问!" || res.code === 4001) {
+    if (res.message==="账户信息已过期,请重新登录!" || res.code === 4001) {
       clearSession()
       router.push('/login')
-      ElMessageBox.alert('你已被登出，请重新登录', '提示', {})
+      ElMessageBox.alert('账户信息已过期,请重新登录!', '提示', {})
+    }
+    if(res.message==="未登录账户,请登录后进行操作!" || res.code === 4001) {
+      clearSession()
+      router.push('/login')
+      ElMessageBox.alert('未登录账户,请登录后进行操作!', '提示', {})
     }
     return res
   } else {
