@@ -4,32 +4,34 @@ const themeConfigModule = {
 		themeConfig: {
 			/* 全局主题
             ------------------------------- */
-			// 默认 primary 颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认 primary 颜色
 			primary: '#409eff',
-			// 默认 success 颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认 success 颜色
 			success: '#67c23a',
-			// 默认 info 颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认 info 颜色
 			info: '#909399',
-			// 默认 warning 颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认 warning 颜色
 			warning: '#e6a23c',
-			// 默认 danger 颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认 danger 颜色
 			danger: '#f56c6c',
 
 			/* 菜单 / 顶栏
             ------------------------------- */
-			// 默认顶栏导航背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认顶栏导航背景颜色
 			topBar: '#2196F3',
-			// 默认菜单导航背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认菜单导航背景颜色
 			menuBar: '#1976D2',
-			// 默认分栏菜单背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认分栏菜单背景颜色
 			columnsMenuBar: '#545c64',
-			// 默认顶栏导航字体颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认顶栏导航字体颜色
 			topBarColor: '#FFFFFF',
-			// 默认菜单导航字体颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认菜单导航字体颜色
 			menuBarColor: '#FFFFFF',
-			// 默认分栏菜单字体颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认TagsView导航背景颜色
+			tagsViewBgColor: '#1e82d3',
+			// 默认分栏菜单字体颜色
 			columnsMenuBarColor: '#e6e6e6',
-
+			// Tags显示风格
 			tagsStyle: 'tagsStyleOne',
 
 
@@ -69,13 +71,6 @@ const themeConfigModule = {
             ------------------------------- */
 			// 是否开启后端控制路由
 			isRequestRoutes: true,
-
-			/* 全局网站标题 / 副标题
-            ------------------------------- */
-			// 网站主标题（菜单导航、浏览器当前网页标题）
-			globalTitle: 'deltalpha-admin',
-			// 网站副标题（登录页顶部文字）
-			globalViceTitle: ''
 		},
 	},
 	mutations: {
@@ -95,6 +90,9 @@ const themeConfigModule = {
 		setTopBarTextColor(state, color) {
 			state.themeConfig.topBarColor = color;
 		},
+		setTagsViewBgColor(state, color) {
+			state.themeConfig.tagsViewBgColor = color;
+		},
 		setTagsStyle(state, style) {
 			state.themeConfig.tagsStyle = style;
 		},
@@ -103,6 +101,9 @@ const themeConfigModule = {
 		},
 		openBreadcrumb(state, data) {
 			state.themeConfig.isBreadcrumb = data;
+		},
+		isShowLogo(state, data){
+			state.themeConfig.isShowLogo = data;
 		},
 	},
 	actions: {

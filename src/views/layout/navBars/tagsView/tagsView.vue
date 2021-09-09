@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-navbars-tagsview" :class="{ 'layout-navbars-tagsview-shadow': getThemeConfig.layout === 'classic' }">
+  <div class="layout-navbars-tagsview" :class="{ 'layout-navbars-tagsview-shadow': getThemeConfig.layout === 'classic' }" :style="{backgroundColor: tagsViewBgColor}">
     <Scroll ref="scrollRef">
       <ul class="layout-navbars-tagsview-ul" :class="setTagsStyle">
         <li v-for="(v, k) in tagsViewList" :key="k" class="layout-navbars-tagsview-ul-li" :data-name="v.name" :class="{ 'is-active': isActive(v.path) }" @contextmenu.prevent="onContextmenu(v, $event)" @click="onTagsClick(v, k)" :ref="(el) => { if (el) tagsRefs[k] = el; }">
@@ -57,6 +57,9 @@ export default {
       tagsViewList: [],
       sortable: "",
       tagsViewRoutesList: [],
+      tagsViewBgColor: computed(
+        () => store.state.themeConfig.themeConfig.tagsViewBgColor
+      ),
     });
     // 动态设置 tagsView 风格样式
     const setTagsStyle = computed(() => {
@@ -297,7 +300,6 @@ export default {
 <style scoped lang="scss">
 .layout-navbars-tagsview {
   flex: 1;
-  background-color: #ffffff;
   border-bottom: 1px solid #f1f2f3;
   ::v-deep(.el-scrollbar__wrap) {
     overflow-x: auto !important;
@@ -319,6 +321,7 @@ export default {
       display: flex;
       align-items: center;
       border: 1px solid #e6e6e6;
+      background-color: #FFFFFF;
       padding: 0 15px;
       margin-right: 5px;
       border-radius: 7px;
@@ -380,7 +383,7 @@ export default {
     }
     .is-active {
       background: none !important;
-      color: var(--color-primary) !important;
+      color: whitesmoke;
       border-bottom: 2px solid !important;
       border-color: var(--color-primary) !important;
       border-radius: 0 !important;
@@ -433,14 +436,11 @@ export default {
     }
     .is-active {
       background: none !important;
-      color: var(--color-primary) !important;
+      color: whitesmoke;
     }
   }
 }
 .layout-navbars-tagsview-shadow {
   box-shadow: rgb(0 21 41 / 4%) 0px 1px 4px;
-}
-.el-scrollbar__view{
-  
 }
 </style>

@@ -33,7 +33,7 @@ export default {
 	align-items: center;
 	padding-right: 15px;
 	overflow: hidden;
-	border-bottom: 1px solid #BDBDBD;
+	
 
 }
 </style>

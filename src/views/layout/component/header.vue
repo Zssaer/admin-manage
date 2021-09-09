@@ -13,7 +13,7 @@ export default {
 	setup() {
 		// 设置 header 的高度
 		const setHeaderHeight = computed(() => {
-            return '84px';
+            return '100px';
 		});
 		return {
 			setHeaderHeight,
