@@ -55,6 +55,7 @@ const staticRoutes = [
       title: "没有权限",
     },
   },
+  
 ];
 
 // 定义404界面
@@ -169,11 +170,12 @@ let hasBackEndRoutes = false;
 router.beforeEach((to, from, next) => {
   NProgress.start();
   const token = getSession("voucher");
-
+  
   if (token) {
     if (!hasBackEndRoutes) {
       // 获取主题配置，是否为后端获取路由
-      const requestRoutes = store.state.themeConfig.themeConfig.isRequestRoutes;
+      const requestRoutes= store.state.themeConfig.themeConfig.isRequestRoutes;
+      console.log(requestRoutes);
         if (requestRoutes) {
           getBackEndControlRoutes((res) => {
             const routes = res.data;
@@ -185,6 +187,9 @@ router.beforeEach((to, from, next) => {
           });
         } else {
           initRoutes(staticRoutesConfig);
+          hasBackEndRoutes = true;
+          const path = router.currentRoute.value.fullPath;
+          router.push(path);
         }
     }
 

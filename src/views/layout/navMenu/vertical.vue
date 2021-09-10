@@ -4,11 +4,23 @@
     :default-active="defaultActive"
     background-color="transparent"
     :collapse="setIsCollapse"
-    :collapse-transition="true"
-  > 
-    <div class="logo">
-    <img class="logoImg" loading="lazy" src="@/assets/logo.png">
+    :collapse-transition="false"
+  >
+    <div class="logo" v-if="!Collapse" @click="onThemeConfigChange">
+      <img
+        class="logoImg"
+        loading="lazy"
+        src="@/assets/logo.png"
+      />
     </div>
+    <div class="smallLogo" v-if="Collapse" @click="onThemeConfigChange">
+      <img
+        class="logoImg-small"
+        loading="lazy"
+        src="@/assets/logo-small.png"
+      />
+    </div>
+
     <template v-for="val in menuLists">
       <el-submenu
         :index="val.path"
@@ -77,6 +89,9 @@ export default defineComponent({
       menuColor: computed(
         () => store.state.themeConfig.themeConfig.menuBarColor
       ),
+      Collapse: computed(
+        () => store.state.themeConfig.themeConfig.isCollapse
+      ),
       defaultActive: route.path,
     });
 
@@ -95,37 +110,61 @@ export default defineComponent({
       proxy.mittBus.emit("onMenuClick");
     });
 
+    // logo 点击实现菜单展开/收起
+    const onThemeConfigChange = () => {
+      proxy.mittBus.emit("onMenuClick");
+      store.state.themeConfig.themeConfig.isCollapse =
+        !store.state.themeConfig.themeConfig.isCollapse;
+    };
+
     return {
       menuLists,
       setIsCollapse,
       ...toRefs(state),
+      onThemeConfigChange,
     };
   },
 });
 </script>
 <style lang="scss">
-.el-menu.el-menu--collapse.layout-aside-width64.v-enter-to{
-  .logoImg{
-    height: 20px;
-    width: 65px;
-    position: absolute;
-    top: 50%;
-left: 50%;
-transform: translate(-50%,-50%);
-  }
-}
-.logo{
-  position: relative;
-  text-align:center;
-  height: 59px;
-}
-.logoImg{
-  width: 80%; 
-}
+.logo {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgb(0 21 41 / 2%) 0px 1px 4px;
+  cursor: pointer;
+  animation: logoAnimation 0.3s ease-in-out;
 
+}
+.logoImg {
+  width: 80%;
+}
+.smallLogo{
+  width: 100%;
+	height: 50px;
+	display: flex;
+	cursor: pointer;
+  align-items: center;
+  justify-content: center;
+	animation: logoAnimation 0.3s ease-in-out;
+	&-img {
+		width: 20px;
+		margin: auto;
+	}
+	&:hover {
+		img {
+			animation: logoAnimation 0.3s ease-in-out;
+		}
+	}
+}
+.logoImg-small{
+  width: 80%;
+}
 .el-submenu__title {
   .el-icon-arrow-down:before {
-    content: '\e790';
+    content: "\e790";
     color: white;
   }
 }

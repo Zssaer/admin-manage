@@ -4,7 +4,7 @@
 			class="layout-scrollbar"
 			ref="layoutScrollbarRef"
 			v-show="!currentRouteMeta.isLink && !currentRouteMeta.isIframe"
-			:style="{ minHeight: `calc(100vh - ${headerHeight}` }"
+			:style="{ minHeight: `auto` }"
 		>
 			<LayoutParentView />
 		</el-scrollbar>

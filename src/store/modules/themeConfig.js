@@ -56,7 +56,7 @@ const themeConfigModule = {
 			// 是否开启 Tagsview 图标
 			isTagsviewIcon: false,
 			// 是否开启 TagsView 缓存
-			isCacheTagsView: true,
+			isCacheTagsView: false,
 			// 是否开启 TagsView 拖拽
 			isSortableTagsView: true,
 			// 是否开启 Footer 底部版权信息
@@ -70,7 +70,7 @@ const themeConfigModule = {
 			/* 后端控制路由
             ------------------------------- */
 			// 是否开启后端控制路由
-			isRequestRoutes: true,
+			isRequestRoutes: false,
 		},
 	},
 	mutations: {

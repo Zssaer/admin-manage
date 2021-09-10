@@ -5,7 +5,7 @@
 		</div>
 		<div class="login-content" :class="{ 'login-content-mobile': tabsActiveName === 'mobile' }">
 			<div class="login-content-main">
-				<h4 class="login-content-title">智慧医疗实验室后台</h4>
+				<h4 class="login-content-title">Tiny-Admin</h4>
 				<el-tabs v-model="tabsActiveName" @tab-click="onTabsClick">
 					<el-tab-pane label="账号密码登录" name="account" :disabled="tabsActiveName === 'account'">
 						<transition name="el-zoom-in-center">
