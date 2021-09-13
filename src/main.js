@@ -11,7 +11,7 @@ import mitt from 'mitt';
 import ECharts from 'vue-echarts'
 
 
-import '../mockjs'
+// import '../mockjs'
 
 const app = createApp(App);
 

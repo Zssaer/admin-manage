@@ -7,7 +7,10 @@
         :label="item.label"
         :label-width="item.width"
       >
-        <el-input v-model="content" :autocomplete="item.autocomplete"></el-input>
+        <el-input
+          v-model="form[item.date]"
+          :autocomplete="item.autocomplete"
+        ></el-input>
       </el-form-item>
     </el-form>
 
@@ -42,14 +45,21 @@ export default {
       }),
     });
 
-    const content= computed((val) => {
-        return state.form + val
-    }),
-    
+    const content = computed((val) => {
+      return state.form + val;
+    });
+
+    let select = {
+      form: "2",
+      radio1: "",
+      radio2: "",
+    };
+
     const enter = () => {
       console.log(state.form.date);
       emit("update:modelValue", false);
     };
+
     return {
       state,
       content,

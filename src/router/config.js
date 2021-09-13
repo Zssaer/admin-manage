@@ -22,7 +22,15 @@ export default [
         name: "table",
         component: () => import("@/views/contentMag/table/index.vue"),
         meta: {
-          title: "表格页面",
+          title: "表格组件",
+        },
+      },
+      {
+        path: "/contentMag/richText",
+        name: "RichText",
+        component: () => import("@/views/contentMag/richText/index.vue"),
+        meta: {
+          title: "富文本组件",
         },
       },
     ],
