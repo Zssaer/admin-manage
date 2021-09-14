@@ -33,6 +33,14 @@ export default [
           title: "富文本组件",
         },
       },
+      {
+        path: "/contentMag/imgUpload",
+        name: "ImgUpload",
+        component: () => import("@/views/contentMag/imgUpload/index.vue"),
+        meta: {
+          title: "图像组件",
+        },
+      },
     ],
   },
 ];

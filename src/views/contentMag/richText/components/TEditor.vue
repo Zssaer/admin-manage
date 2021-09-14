@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {uploadEditorPic} from "@/api/file/pic.js";
+import {uploadEditorPic} from "@/api/file/upload.js";
 
 //引入tinymce编辑器 以及本地style文件
 import Editor from "@tinymce/tinymce-vue";

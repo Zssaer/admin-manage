@@ -8,7 +8,7 @@ const request2 = axios.create({
   headers: { 'Content-Type': 'application/json' }
 })
 
-export function update(params){
+export function upload(params){
   return request({
     url: '/upload',
     method: 'post',
