@@ -1,17 +1,18 @@
 {
   "name": "admin-manage",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons": "^0.0.11",
     "@tinymce/tinymce-vue": "^4.0.4",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "echarts": "^5.2.0",
-    "element-plus": "^1.0.2-beta.28",
+    "element-plus": "^1.1.0-beta.12",
     "mitt": "^2.1.0",
     "nprogress": "^0.2.0",
     "screenfull": "^5.1.0",

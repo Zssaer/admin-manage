@@ -22,7 +22,7 @@
     </div>
 
     <template v-for="val in menuLists">
-      <el-submenu
+      <el-sub-menu
         :index="val.path"
         v-if="val.children && val.children.length > 0"
         :key="val.path"
@@ -35,7 +35,7 @@
           <span :style="{ color: menuColor }">{{ val.meta.title }}</span>
         </template>
         <SubItem :chil="val.children" :menuColor="menuColor" />
-      </el-submenu>
+      </el-sub-menu>
       <el-menu-item
         :index="val.path"
         :key="val.path"
@@ -162,21 +162,21 @@ export default defineComponent({
 .logoImg-small{
   width: 80%;
 }
-.el-submenu__title {
+.el-sub-menu__title {
   .el-icon-arrow-down:before {
     content: "\e790";
     color: white;
   }
 }
 /*菜单下拉框样式开始*/
->>> .el-menu--horizontal > .el-submenu:focus .el-submenu__title {
+>>> .el-menu--horizontal > .el-sub-menu:focus .el-sub-menu__title {
   color: white;
 }
-.el-menu--popup-bottom-start .el-submenu >>> .el-submenu__title {
+.el-menu--popup-bottom-start .el-sub-menu >>> .el-sub-menu__title {
   color: #333333 !important;
   font-size: 12px !important;
 }
-.el-menu--popup-bottom-start .el-submenu >>> .el-submenu__title:hover {
+.el-menu--popup-bottom-start .el-sub-menu >>> .el-sub-menu__title:hover {
   background-color: #eaf5ff !important;
   color: #53b1fd !important;
 }

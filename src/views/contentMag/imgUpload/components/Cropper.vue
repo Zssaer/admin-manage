@@ -9,14 +9,22 @@
       :on-success="handleAvatarSuccess"
     >
       <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-      <i v-else class="el-icon-upload avatar-uploader-icon"></i>
+      <el-icon v-else class="avatar-uploader-icon">
+        <UploadFilled/>
+        <h4 class="avatar-uploader-span">上传图片</h4>
+        <h6 class="avatar-uploader-span">图片上传不得超过10mb</h6>
+      </el-icon>
 
       <div class="pric" v-show="showProgress">
         <el-progress type="circle" :percentage="percentage"></el-progress>
       </div>
       <div class="shadow" v-if="imageUrl">
-        <span class="el-icon-zoom-in" @click="bigClick"></span>
-        <span class="el-icon-delete" @click="delClick"></span>
+        <el-icon class="button">
+          <Crop @click="bigClick" />
+        </el-icon>
+        <el-icon class="button">
+          <DeleteFilled @click="delClick" />
+        </el-icon>
       </div>
     </el-upload>
     <el-dialog
@@ -67,6 +75,7 @@
 </template>
 
 <script>
+import { Crop, DeleteFilled,UploadFilled } from "@element-plus/icons";
 import { VueCropper } from "vue-cropper";
 import { upload } from "@/api/file/upload.js";
 import { ref, toRefs } from "@vue/reactivity";
@@ -82,6 +91,9 @@ const code = 200;
 export default {
   components: {
     VueCropper,
+    Crop,
+    DeleteFilled,
+    UploadFilled
   },
   props: {
     modelValue: String,
@@ -186,11 +198,12 @@ export default {
 
     /* 裁剪图片 */
     const finish = () => {
-      ElMessageBox.confirm('是否裁剪当前图片?', '警告', {
-          distinguishCancelAndClose: true,
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-        }).then(() => {
+      ElMessageBox.confirm("是否裁剪当前图片?", "警告", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+      })
+        .then(() => {
           imgCut.value.getCropBlob((data) => {
             // 创建一个file对象,用作保存裁剪的Blob对象,后续用作上传
             let params = new FormData();
@@ -261,13 +274,16 @@ export default {
   opacity: 0;
   transition: all 0.5s;
 }
-.shadow span {
-  text-align: center;
+.shadow .button {
   line-height: 278px;
-  font-size: 29px;
+  font-size: 34px;
   color: #fff;
-  padding: 0 10px;
+  margin: 0 30px;
+  :hover {
+    color: #2196f3;
+  }
 }
+
 .el-upload:hover .shadow {
   opacity: 1;
 }
@@ -292,8 +308,12 @@ export default {
   color: #8c939d;
   width: 190px;
   height: 190px;
-  line-height: 190px;
-  text-align: center;
+  position: relative;
+  top: 50px;
+}
+#imgUpDate .avatar-uploader-span{
+  font-size: 14px;
+  line-height: 18px;
 }
 #imgUpDate .avatar {
   width: 365px;

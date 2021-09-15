@@ -41,6 +41,22 @@ export default [
           title: "图像组件",
         },
       },
+      {
+        path: "/contentMag/article",
+        name: "Article",
+        component: () => import("@/views/contentMag/article/index.vue"),
+        meta: {
+          title: "文章列表",
+        },
+      },
+      {
+        path: "/contentMag/Create",
+        name: "Create",
+        component: () => import("@/views/contentMag/article/Create.vue"),
+        meta: {
+          title: "创建文章",
+        },
+      },
     ],
   },
 ];
