@@ -28,7 +28,7 @@
 
       <el-table-column width="100px" label="Importance">
         <template v-slot="scope">
-          <el-icon v-for="n in +scope.row.importance" :key="n">
+          <el-icon v-for="n in scope.row.importance" :key="n">
             <star-filled />
           </el-icon>
         </template>
@@ -44,7 +44,7 @@
 
       <el-table-column min-width="300px" label="Title">
         <template v-slot="{ row }">
-          <router-link :to="'/example/edit/' + row.id" class="link-type">
+          <router-link :to="{name:'EditArticle', query: {item:JSON.stringify(row)}}" class="link-type">
             <span>{{ row.title }}</span>
           </router-link>
         </template>
@@ -52,7 +52,7 @@
 
       <el-table-column align="center" label="Actions" width="120">
         <template v-slot="scope">
-          <router-link :to="'/example/edit/' + scope.row.id">
+          <router-link :to="{name:'EditArticle', query: {item:JSON.stringify(scope.row)}}">
             <el-button type="primary" size="small" icon="el-icon-edit">
               Edit
             </el-button>

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import ArticleDetail from "../article/components/ArticleDetail.vue";
+import ArticleDetail from "./components/ArticleDetail.vue";
 
 export default {
   components: {

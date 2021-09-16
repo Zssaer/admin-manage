@@ -7,6 +7,11 @@
       class="form-container"
     >
       <div class="buttons">
+        <el-button type="success" class="el-icon-back" @click="backToList" v-if="isEdit">
+          <!-- <el-icon>
+            <ArrowLeftBold />
+          </el-icon> -->
+        </el-button>
         <el-button type="primary" @click="submit">{{ button }}</el-button>
       </div>
       <div class="createPost-main-container">
@@ -49,7 +54,7 @@
                     class="postInfo-container-item"
                   >
                     <el-date-picker
-                      v-model="postForm.displayTime"
+                      v-model="postForm.display_time"
                       type="date"
                       placeholder=""
                     />
@@ -100,9 +105,14 @@
 import TEditor from "@/views/contentMag/richText/components/TEditor.vue";
 import MDinput from "@/components/MDinput/index.vue";
 import { ElMessage } from "element-plus";
-import { reactive, ref, computed, toRefs } from "vue";
+import { reactive, ref, computed, toRefs, onBeforeMount } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { ArrowLeftBold } from "@element-plus/icons";
 
 export default {
+  components: {
+    ArrowLeftBold,
+  },
   props: {
     isEdit: {
       type: Boolean,
@@ -114,9 +124,10 @@ export default {
     MDinput,
   },
   setup(props) {
+    // 提交按钮文字,判断是否为编辑文章还是创建文章
     const button = computed(() => {
       const { isEdit } = toRefs(props);
-      return isEdit === true ? "修改" : "创建";
+      return isEdit.value === true ? "修改" : "创建";
     });
 
     const validateRequire = async (rule, value, callback) => {
@@ -134,21 +145,35 @@ export default {
       }
     };
 
+    // 文章表单规则
     const rules = {
       title: [{ validator: validateRequire }],
       content: [{ validator: validateRequire }],
     };
 
-    const postForm = reactive({
-      status: "draft",
-      title: "", // 文章题目
-      author: "",
-      content: "", // 文章内容
-      content_short: "", // 文章摘要
-      displayTime: "undefined", // 前台展示时间
-      id: undefined,
-      comment_disabled: false,
-      importance: 0,
+    const state = reactive({
+      // 上传文章表单数据
+      postForm: {
+        status: "draft",
+        title: "", // 文章题目
+        author: "",
+        content: "", // 文章内容
+        content_short: "", // 文章摘要
+        display_time: "undefined", // 前台展示时间
+        id: undefined,
+        comment_disabled: false,
+        importance: 0,
+      },
+    });
+
+    const route = useRoute();
+    onBeforeMount(() => {
+      // 判断路由是否为 '编辑文章'
+      if (route.meta.title === "编辑文章") {
+        // 这儿纯前端下采用传递数据,前后端环境下请传入id使用异步通讯查询
+        const data = JSON.parse(decodeURIComponent(route.query.item));
+        state.postForm = data;
+      }
     });
 
     let userListOptions = computed(() => {
@@ -156,16 +181,15 @@ export default {
     });
 
     const titleLength = computed(() => {
-      return postForm.title.length;
+      return state.postForm.title.length;
     });
 
     const contentShortLength = computed(() => {
-      return postForm.content_short.length;
+      return state.postForm.content_short.length;
     });
 
     let loading = ref(false);
     const ddcdc = ref(null);
-
     const submit = () => {
       loading.value = true;
       ddcdc.value.validate((valid) => {
@@ -175,18 +199,22 @@ export default {
             message: "发布文章成功!",
             type: "success",
           });
-          postForm.status = "published";
+          state.postForm.status = "published";
           loading.value = false;
         } else {
           loading.value = false;
         }
       });
     };
+    const router = useRouter();
+    const backToList = () => {
+      router.push("/articleMag/article");
+    };
 
     return {
       button,
       validateRequire,
-      postForm,
+      ...toRefs(state),
       rules,
       userListOptions,
       titleLength,
@@ -194,6 +222,7 @@ export default {
       loading,
       ddcdc,
       submit,
+      backToList,
     };
   },
 };

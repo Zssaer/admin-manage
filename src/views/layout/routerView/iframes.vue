@@ -39,6 +39,7 @@ export default defineComponent({
 		onBeforeMount(() => {
 			state.iframeUrl = props.meta.isLink;
 			proxy.mittBus.on('onTagsViewRefreshRouterView', (path) => {
+				console.log(path);
 				if (route.path !== path) return false;
 				emit('getCurrentRouteMeta');
 			});

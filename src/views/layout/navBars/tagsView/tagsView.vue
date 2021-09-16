@@ -108,13 +108,14 @@ export default {
       if (state.tagsViewList.some((v) => v.path === path)) return false;
       const item = state.tagsViewRoutesList.find((v) => v.path === path);
       if (item.meta.isLink && !item.meta.isIframe) return false;
+      // 不把其 不能缓存的页面放置到tagsView导航中去
+      if (item.meta.noCache) return false;
       if (!item.meta.isHide) state.tagsViewList.push({ ...item });
       addBrowserSetSession(state.tagsViewList);
     };
     // 2、刷新当前 tagsView：
     const refreshCurrentTagsView = (path) => {
       proxy.mittBus.emit("onTagsViewRefreshRouterView", path);
-      router.push(path);
     };
     // 3、关闭当前 tagsView：如果是设置了固定的（isAffix），不可以关闭
     const closeCurrentTagsView = (path) => {
@@ -164,6 +165,7 @@ export default {
       let { id, path } = data;
       switch (id) {
         case 0:
+          router.push(path);
           refreshCurrentTagsView(path);
           break;
         case 1:

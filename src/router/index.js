@@ -128,7 +128,7 @@ export function initRoutes(routes) {
   router.addRoute(mainRoutes);
   router.addRoute(pathMatch);
   
-  console.log("router.getRoutes() :>> ", router.getRoutes());
+  console.log("获取路由:>> ", router.getRoutes());
 }
 
 // 后端控制路由，isRequestRoutes 为 true， 则开启后端控制路由
@@ -175,7 +175,7 @@ router.beforeEach((to, from, next) => {
     if (!hasBackEndRoutes) {
       // 获取主题配置，是否为后端获取路由
       const requestRoutes= store.state.themeConfig.themeConfig.isRequestRoutes;
-      console.log(requestRoutes);
+      console.log("是否后台动态路由",requestRoutes);
         if (requestRoutes) {
           getBackEndControlRoutes((res) => {
             const routes = res.data;

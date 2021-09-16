@@ -41,18 +41,41 @@ export default [
           title: "图像组件",
         },
       },
+    ],
+  },
+  {
+    path: "/articleMag",
+    name: "ArticleMag",
+    component: () => import("@/views/articleMag/index.vue"),
+    meta: {
+      title: "文章管理",
+      icon: "el-icon-s-platform",
+    },
+    children: [
       {
-        path: "/contentMag/article",
+        path: "/articleMag/article",
         name: "Article",
-        component: () => import("@/views/contentMag/article/index.vue"),
+        component: () => import("@/views/articleMag/list.vue"),
         meta: {
           title: "文章列表",
         },
       },
       {
-        path: "/contentMag/Create",
+        path: "/articleMag/edit",
+        component: () => import("@/views/articleMag/edit.vue"),
+        name: "EditArticle",
+        meta: {
+          title: "编辑文章",
+          noCache: true,
+          isKeepAlive: false,
+          activeMenu: "/articleMag/list",
+        },
+        hidden: true,
+      },
+      {
+        path: "/articleMag/Create",
         name: "Create",
-        component: () => import("@/views/contentMag/article/Create.vue"),
+        component: () => import("@/views/articleMag/create.vue"),
         meta: {
           title: "创建文章",
         },

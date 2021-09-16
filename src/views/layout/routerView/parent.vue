@@ -3,9 +3,10 @@
     <router-view v-slot="{ Component }">
       <transition :name="setTransitionName" mode="out-in">
         <div>
-          <keep-alive>
-            <component :is="Component" />
+          <keep-alive exclude="EditArticle">
+            <component :is="Component"  />
           </keep-alive>
+          //<component :is="Component" v-if="!isDisplay" />
         </div>
       </transition>
     </router-view>
@@ -13,16 +14,39 @@
 </template>
 
 <script>
-import { computed, defineComponent, toRefs, reactive, getCurrentInstance, onBeforeMount, onUnmounted, nextTick } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import {
+  computed,
+  defineComponent,
+  toRefs,
+  reactive,
+  getCurrentInstance,
+  onBeforeMount,
+  onUnmounted,
+  nextTick,
+} from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "@/store/index.js";
 
 export default defineComponent({
   name: "layoutParentView",
   setup() {
     const { proxy } = getCurrentInstance();
-		const route = useRoute();
+    const route = useRoute();
+    const store = useStore();
     const state = reactive({
       refreshRouterViewKey: null,
+      cachedViews: computed(() => {
+        console.log(store.state.cachedViews);
+        store.state.cachedViews;
+      }),
+    });
+    // 判断页面是否可缓存
+    const isDisplay = computed(() => {
+      if (route.meta.isKeepAlive) {
+        return true;
+      } else {
+        return false;
+      }
     });
     // 设置主界面切换动画
     const setTransitionName = computed(() => {
@@ -33,9 +57,9 @@ export default defineComponent({
     onBeforeMount(() => {
       proxy.mittBus.on("onTagsViewRefreshRouterView", (path) => {
         if (route.path !== path) return false;
-        state.refreshRouterViewKey = route.path;
+        state.refreshRouterViewKey = null;
         nextTick(() => {
-          state.refreshRouterViewKey = null;
+          state.refreshRouterViewKey = route.path;
         });
       });
     });
@@ -46,6 +70,7 @@ export default defineComponent({
     return {
       setTransitionName,
       ...toRefs(state),
+      isDisplay,
     };
   },
 });
