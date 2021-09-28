@@ -82,4 +82,31 @@ export default [
       },
     ],
   },
+  {
+    path: "/adminMag",
+    name: "AdminMag",
+    component: () => import("@/views/adminMag/index.vue"),
+    meta: {
+      title: "管理员管理",
+      icon: "el-icon-s-check",
+    },
+    children: [
+      {
+        path: "/adminMag/admin",
+        name: "Admin",
+        component: () => import("@/views/adminMag/component/admin.vue"),
+        meta: {
+          title: "账户管理",
+        },
+      },
+      {
+        path: "/adminMag/role",
+        name: "Role",
+        component: () => import("@/views/adminMag/component/role.vue"),
+        meta: {
+          title: "角色管理",
+        },
+      },
+    ],
+  },
 ];

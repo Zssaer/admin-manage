@@ -6,7 +6,7 @@
           <keep-alive exclude="EditArticle">
             <component :is="Component"  />
           </keep-alive>
-          //<component :is="Component" v-if="!isDisplay" />
+          <component :is="Component" v-if="!isDisplay" />
         </div>
       </transition>
     </router-view>
